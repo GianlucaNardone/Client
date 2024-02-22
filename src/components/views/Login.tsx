@@ -58,6 +58,28 @@ const Login = () => {
     }
   };
 
+  // I have to change this to make it work for registration
+  // Change the following: 
+  const doRegistration = async () => {
+    try {
+      const requestBody = JSON.stringify({ username, name });
+      const response = await api.post("/users", requestBody);
+
+      // Get the returned user and update a new object.
+      const user = new User(response.data);
+
+      // Store the token into the local storage.
+      localStorage.setItem("token", user.token);
+
+      // Login successfully worked --> navigate to the route /game in the GameRouter
+      navigate("/game");
+    } catch (error) {
+      alert(
+        `Something went wrong during the login: \n${handleError(error)}`
+      );
+    }
+  };
+
   return (
     <BaseContainer>
       <div className="login container">
@@ -80,6 +102,15 @@ const Login = () => {
             >
               Login
             </Button>
+            <div className="registration button-container">
+              <Button
+                disabled={!username || !name}
+                width="100%"
+                onClick={() => doRegistration()}
+              >
+                Registration
+              </Button>
+            </div>
           </div>
         </div>
       </div>
