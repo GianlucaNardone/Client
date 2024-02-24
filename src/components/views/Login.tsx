@@ -102,15 +102,14 @@ const Login = () => {
             >
               Login
             </Button>
-            <div className="registration button-container">
-              <Button
-                disabled={!username || !name}
-                width="100%"
-                onClick={() => doRegistration()}
-              >
-                Registration
-              </Button>
-            </div>
+          
+            <Button
+              width="100%"
+              onClick={() => doRegistration()}
+              className="secondary-button"
+            >
+              Registration
+            </Button>
           </div>
         </div>
       </div>
