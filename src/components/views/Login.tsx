@@ -16,10 +16,9 @@ specific components that belong to the main one in the same file.
 const FormField = (props) => {
   return (
     <div className="login field">
-      <label className="login label">{props.label}</label>
       <input
         className="login input"
-        placeholder="enter here.."
+        placeholder={props.placeholder}
         value={props.value}
         onChange={(e) => props.onChange(e.target.value)}
       />
@@ -28,7 +27,7 @@ const FormField = (props) => {
 };
 
 FormField.propTypes = {
-  label: PropTypes.string,
+  placeholder: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
 };
@@ -85,12 +84,12 @@ const Login = () => {
       <div className="login container">
         <div className="login form">
           <FormField
-            label="Username"
+            placeholder="Username"
             value={username}
             onChange={(un: string) => setUsername(un)}
           />
           <FormField
-            label="Password"
+            placeholder="Password"
             value={name}
             onChange={(n) => setName(n)}
           />
@@ -102,7 +101,6 @@ const Login = () => {
             >
               Login
             </Button>
-          
             <Button
               width="100%"
               onClick={() => doRegistration()}
