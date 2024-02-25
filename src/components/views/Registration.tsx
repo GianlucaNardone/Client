@@ -36,15 +36,20 @@ const Registration = () => {
       const requestBody = JSON.stringify({ username, name });
       const response = await api.post("/users", requestBody);
 
+      // Get the returned user and update a new object.
       const user = new User(response.data);
+
+      // Store the token into the local storage.
       localStorage.setItem("token", user.token);
-      
-      // Redirect the user to the main page after successful registration
+
+      // Login successfully worked --> navigate to the route /game in the GameRouter
       navigate("/game");
     } catch (error) {
-      alert(`Something went wrong during the registration: \n${handleError(error)}`);
+      alert(
+        `Something went wrong during the registration: \n${handleError(error)}`
+      );
     }
-  };
+  }
 
   const doLogin = () => {
     navigate("/login");
@@ -68,7 +73,7 @@ const Registration = () => {
             <Button
               disabled={!username || !name}
               width="100%"
-              onClick={doRegistration()}
+              onClick={() => doRegistration()}
             >
               Create Account
             </Button>
