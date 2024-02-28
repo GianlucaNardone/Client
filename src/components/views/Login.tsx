@@ -47,7 +47,7 @@ const Login = () => {
         navigate('/game'); 
       } else {
         // Authentication failed, display an error message
-        alert('Invalid username or password. Please try again.');
+          alert('Invalid username or password. Please try again.');
       }
     } catch (error) {
       alert(
