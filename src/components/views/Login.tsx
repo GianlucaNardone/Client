@@ -44,7 +44,7 @@ const Login = () => {
       
       if (response.status === 200) {
         // Authentication successful, redirect to '/game'
-        navigate('/game'); 
+        navigate("/game"); 
       } else {
         // Authentication failed, display an error message
         alert("Invalid username or password. Please try again.");
