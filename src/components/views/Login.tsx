@@ -40,16 +40,15 @@ const Login = () => {
   const doLogin = async () => {
     try {
       const requestBody = JSON.stringify({ username, name });
-      const response = await api.post("/users", requestBody);
-
-      // Get the returned user and update a new object.
-      const user = new User(response.data);
-
-      // Store the token into the local storage.
-      localStorage.setItem("token", user.token);
-
-      // Login successfully worked --> navigate to the route /game in the GameRouter
-      navigate("/game");
+      const response = await api.post("/login", requestBody);
+      
+      if (response.status === 200) {
+        // Authentication successful, redirect to '/game'
+        navigate('/game'); 
+      } else {
+        // Authentication failed, display an error message
+        alert('Invalid username or password. Please try again.');
+      }
     } catch (error) {
       alert(
         `Something went wrong during the login: \n${handleError(error)}`
