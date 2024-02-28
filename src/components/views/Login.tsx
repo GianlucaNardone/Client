@@ -42,6 +42,10 @@ const Login = () => {
       const requestBody = JSON.stringify({ username, name });
       const response = await api.post("/login", requestBody);
       
+      const user = new User(response.data);
+      
+      localStorage.setItem("token", user.token);
+
       navigate("/game"); 
     } catch (error) {
       alert(
