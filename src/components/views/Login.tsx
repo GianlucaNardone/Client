@@ -42,13 +42,7 @@ const Login = () => {
       const requestBody = JSON.stringify({ username, name });
       const response = await api.post("/login", requestBody);
       
-      if (response.status === 200) {
-        // Authentication successful, redirect to '/game'
-        navigate("/game"); 
-      } else {
-        // Authentication failed, display an error message
-        alert("Invalid username or password. Please try again.");
-      }
+      navigate("/game"); 
     } catch (error) {
       alert(
         `Something went wrong during the login: \n${handleError(error)}`
