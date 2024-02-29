@@ -42,18 +42,15 @@
     align-items: center;
     background: lighten($background, 5);
   }
-  &.name {
-    font-weight: 300;
-    margin-left: 5px;
-  }
   &.username {
     font-weight: 500;
     color: $accent;
   }
-  &.id {
+  &.list-item {
+    display: flex;
+    align-items: center;
+  }
+  &.profile-button {
     margin-left: auto;
-    margin-right: 10px;
-    font-family: $fontMono;
-    font-weight: 300;
   }
 }

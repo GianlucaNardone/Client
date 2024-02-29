@@ -11,8 +11,6 @@ import { User } from "types";
 const Player = ({ user }: { user: User }) => (
   <div className="player container">
     <div className="player username">{user.username}</div>
-    <div className="player name">{user.name}</div>
-    <div className="player id">id: {user.id}</div>
   </div>
 );
 
@@ -30,11 +28,15 @@ const Game = () => {
   // a component can have as many state variables as you like.
   // more information can be found under https://react.dev/learn/state-a-components-memory and https://react.dev/reference/react/useState 
   const [users, setUsers] = useState<User[]>(null);
+  
+  const doProfile = (userId: number) => {
+    navigate(`/profile/${userId}`);
+  }
 
   const logout = (): void => {
     localStorage.removeItem("token");
     navigate("/login");
-  };
+  }
 
   // the effect hook can be used to react to change in your component.
   // in this case, the effect hook is only run once, the first time the component is mounted
@@ -53,16 +55,7 @@ const Game = () => {
 
         // Get the returned users and update the state.
         setUsers(response.data);
-
-        // This is just some data for you to see what is available.
-        // Feel free to remove it.
-        console.log("request to:", response.request.responseURL);
-        console.log("status code:", response.status);
-        console.log("status text:", response.statusText);
-        console.log("requested data:", response.data);
-
-        // See here to get more data.
-        console.log(response);
+        
       } catch (error) {
         console.error(
           `Something went wrong while fetching the users: \n${handleError(
@@ -86,8 +79,11 @@ const Game = () => {
       <div className="game">
         <ul className="game user-list">
           {users.map((user: User) => (
-            <li key={user.id}>
-              <Player user={user} />
+            <li key={user.id} className="player list-item">
+              <Player user={user}/>
+              <Button className="profile-button" width="100%" onClick={() => doProfile(user.id)}>
+                See Profile
+              </Button>
             </li>
           ))}
         </ul>
@@ -100,9 +96,9 @@ const Game = () => {
 
   return (
     <BaseContainer className="game container">
-      <h2>Happy Coding!</h2>
+      <h2>Homepage</h2>
       <p className="game paragraph">
-        Get all users from secure endpoint:
+        All users:
       </p>
       {content}
     </BaseContainer>
