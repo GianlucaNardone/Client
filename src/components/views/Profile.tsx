@@ -14,7 +14,7 @@ const Player = ({ user }: { user: User }) => (
 );
 
 Player.propTypes = {
- user: PropTypes.object,
+  user: PropTypes.object,
 };
 
 const Profile = () => {
