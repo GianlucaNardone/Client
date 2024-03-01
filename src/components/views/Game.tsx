@@ -39,13 +39,13 @@ const Game = () => {
       const authToken = localStorage.getItem("token");
 
       // Send a request to the logout endpoint with the authentication token in the headers
-        await fetch("/logout", {
+      await fetch("/logout", {
         method: "PUT",
         headers: {
           "Authorization": `Bearer ${authToken}`, // Include the token in the Authorization header
           "Content-Type": "application/json"
         }
-        });
+      });
 
       // Remove the token from local storage
       localStorage.removeItem("token");
