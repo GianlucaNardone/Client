@@ -33,9 +33,29 @@ const Game = () => {
     navigate(`/profile/${userId}`);
   }
 
-  const logout = (): void => {
-    localStorage.removeItem("token");
-    navigate("/login");
+  const logout = async () => {
+    try {
+      // Call the backend API to update the user's status to "offline"
+      const authToken = localStorage.getItem('token');
+
+    // Send a request to the logout endpoint with the authentication token in the headers
+      await fetch('/logout', {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${authToken}`, // Include the token in the Authorization header
+        'Content-Type': 'application/json'
+      }
+      });
+
+      // Remove the token from local storage
+      localStorage.removeItem("token");
+
+      // Navigate to the login page
+      navigate("/login");
+    } catch (error) {
+      console.error("Error logging out:", error);
+      alert("Failed to logout. Please try again.");
+    }
   }
 
   // the effect hook can be used to react to change in your component.
@@ -87,9 +107,9 @@ const Game = () => {
             </li>
           ))}
         </ul>
-        <Button width="100%" onClick={() => logout()}>
-          Logout
-        </Button>
+          <Button width="100%" onClick={() => logout()}>
+            Logout
+          </Button>
       </div>
     );
   }

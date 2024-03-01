@@ -24,6 +24,10 @@
     transition: opacity 0.5s ease, transform 0.5s ease;
     box-shadow: $dropShadow;
     }
+    &.user-list {
+        list-style: none;
+        padding-left: 0;
+    }
 }
 
 .player {
@@ -46,5 +50,8 @@
   &.list-item {
     display: flex;
     align-items: center;
+  }
+  &.player-info-item {
+    margin-bottom: 10px;
   }
 }

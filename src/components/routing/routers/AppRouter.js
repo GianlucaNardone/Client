@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter, Navigate, Route, Routes, Switch} from "react-router-dom";
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import {GameGuard} from "../routeProtectors/GameGuard";
 import GameRouter from "./GameRouter";
 import {LoginGuard} from "../routeProtectors/LoginGuard";

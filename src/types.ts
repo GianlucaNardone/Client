@@ -2,7 +2,7 @@ export type User = {
   username: string;
   name: string;
   id: number;
-  creation_date: Date;
+  creationDate: string;
   birthday: Date;
   status: string
 };
