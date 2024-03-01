@@ -28,27 +28,25 @@ const Game = () => {
   // a component can have as many state variables as you like.
   // more information can be found under https://react.dev/learn/state-a-components-memory and https://react.dev/reference/react/useState 
   const [users, setUsers] = useState<User[]>(null);
-  
+  const [username, setUsername] = useState<string>(null);
+
   const doProfile = (userId: number) => {
     navigate(`/profile/${userId}`);
   }
 
   const logout = async () => {
-    try {
+    try { 
+      
       // Call the backend API to update the user's status to "offline"
-      const authToken = localStorage.getItem("token");
+      const requestBody = JSON.stringify({username});
+      console.log("RequestBody:", requestBody);
 
       // Send a request to the logout endpoint with the authentication token in the headers
-      await fetch("/logout", {
-        method: "PUT",
-        headers: {
-          "Authorization": `Bearer ${authToken}`, // Include the token in the Authorization header
-          "Content-Type": "application/json"
-        }
-      });
+      await api.put("/logout", requestBody);
 
       // Remove the token from local storage
       localStorage.removeItem("token");
+      localStorage.removeItem("username");
 
       // Navigate to the login page
       navigate("/login");
@@ -63,6 +61,11 @@ const Game = () => {
   // this can be achieved by leaving the second argument an empty array.
   // for more information on the effect hook, please see https://react.dev/reference/react/useEffect 
   useEffect(() => {
+
+    const storedUsername = localStorage.getItem("username");
+    setUsername(storedUsername);
+    console.log("Username:", storedUsername);
+
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
     async function fetchData() {
       try {

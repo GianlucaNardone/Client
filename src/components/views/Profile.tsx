@@ -31,7 +31,6 @@ const Profile = () => {
     async function fetchUserData() {
       try {
         const response = await api.get(`/user/${userId}`);
-        console.log("Response data:", response.data); // Log response data
         setUser(response.data);
       } catch (error) {
         console.error(`Error fetching user data: \n${handleError(error)}`);
