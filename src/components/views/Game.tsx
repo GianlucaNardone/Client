@@ -36,16 +36,16 @@ const Game = () => {
   const logout = async () => {
     try {
       // Call the backend API to update the user's status to "offline"
-      const authToken = localStorage.getItem('token');
+      const authToken = localStorage.getItem("token");
 
-    // Send a request to the logout endpoint with the authentication token in the headers
-      await fetch('/logout', {
-      method: 'PUT',
-      headers: {
-        'Authorization': `Bearer ${authToken}`, // Include the token in the Authorization header
-        'Content-Type': 'application/json'
-      }
-      });
+      // Send a request to the logout endpoint with the authentication token in the headers
+        await fetch("/logout", {
+        method: "PUT",
+        headers: {
+          "Authorization": `Bearer ${authToken}`, // Include the token in the Authorization header
+          "Content-Type": "application/json"
+        }
+        });
 
       // Remove the token from local storage
       localStorage.removeItem("token");
@@ -107,9 +107,9 @@ const Game = () => {
             </li>
           ))}
         </ul>
-          <Button width="100%" onClick={() => logout()}>
-            Logout
-          </Button>
+        <Button width="100%" onClick={() => logout()}>
+          Logout
+        </Button>
       </div>
     );
   }
