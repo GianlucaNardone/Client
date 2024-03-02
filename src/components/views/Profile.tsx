@@ -7,25 +7,41 @@ import PropTypes from "prop-types";
 import "styles/views/Profile.scss";
 import { User } from "types";
 
-const Player = ({ user }: { user: User }) => (
-  <div className="player container">
-    <div className="player-info">
-      <div className="player-info-item">Username: {user.username}</div>
-      <div className="player-info-item">Birthday: {user.birthday}</div>
-      <div className="player-info-item">Creation Date: {user.creationDate}</div>
-      <div className="player-info-item">Status: {user.status}</div>
+const Player = ({ user, isCurrentUser }: { user: User, isCurrentUser: boolean }) => {
+  const navigate = useNavigate();
+
+  const handleEditProfile = () => {
+    // Redirect to the edit profile page
+    navigate("/editProfile");
+  };
+
+  return (
+    <div className="player container">
+      <div className="player info">
+        <div className="player info-item">Username: {user.username}</div>
+        <div className="player info-item">Birthday: {user.birthday}</div>
+        <div className="player info-item">Creation Date: {user.creationDate}</div>
+        <div className="player info-item">Status: {user.status}</div>
+        {isCurrentUser && (
+          <div className="player info-item">
+            <Button onClick={handleEditProfile}>Edit Profile</Button>
+           </div>
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 Player.propTypes = {
   user: PropTypes.object.isRequired,
+  isCurrentUser: PropTypes.bool.isRequired,
 };
 
 const Profile = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
   const [user, setUser] = useState<User>({});
+  const [currentUser, setCurrentUser] = useState<User>({});
 
   useEffect(() => {
     async function fetchUserData() {
@@ -40,6 +56,15 @@ const Profile = () => {
     fetchUserData();
   }, [userId]);
 
+
+  useEffect(() => {
+    // Retrieve username from localStorage
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+      setCurrentUser({ username: storedUsername });
+    }
+  }, []);
+
   const doHome = () => {
     navigate("/game");
   };
@@ -50,10 +75,10 @@ const Profile = () => {
         <div className="profile form">
           <ul className="profile user-list">
             <li className="player list-item">
-              <Player user={user} />
+              <Player user={user} isCurrentUser={user.username === currentUser.username} />
             </li>
           </ul>
-          <Button width="100%" onClick={() => doHome()}>
+          <Button style={{ marginBottom: "35px" }} width="100%" onClick={() => doHome()}>
             Back to Homepage
           </Button>
         </div>

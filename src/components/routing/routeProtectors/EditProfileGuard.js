@@ -2,7 +2,7 @@ import React from "react";
 import {Navigate, Outlet} from "react-router-dom";
 import PropTypes from "prop-types";
 
-export const ProfileGuard = () => {
+export const EditProfileGuard = () => {
   if (localStorage.getItem("token")) {
     
     return <Outlet />;
@@ -11,6 +11,6 @@ export const ProfileGuard = () => {
   return <Navigate to="/game" replace />;
 };
 
-ProfileGuard.propTypes = {
+EditProfileGuard.propTypes = {
   children: PropTypes.node
 };

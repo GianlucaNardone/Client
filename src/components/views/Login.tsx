@@ -46,6 +46,7 @@ const Login = () => {
       
       localStorage.setItem("token", user.token);
       localStorage.setItem("username", username);
+      localStorage.setItem("id", user.id);
 
       
       navigate("/game"); 

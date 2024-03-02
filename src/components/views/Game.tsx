@@ -39,7 +39,6 @@ const Game = () => {
       
       // Call the backend API to update the user's status to "offline"
       const requestBody = JSON.stringify({username});
-      console.log("RequestBody:", requestBody);
 
       // Send a request to the logout endpoint with the authentication token in the headers
       await api.put("/logout", requestBody);
@@ -47,6 +46,7 @@ const Game = () => {
       // Remove the token from local storage
       localStorage.removeItem("token");
       localStorage.removeItem("username");
+      localStorage.removeItem("id");
 
       // Navigate to the login page
       navigate("/login");
@@ -64,7 +64,6 @@ const Game = () => {
 
     const storedUsername = localStorage.getItem("username");
     setUsername(storedUsername);
-    console.log("Username:", storedUsername);
 
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
     async function fetchData() {
