@@ -15,6 +15,7 @@ const FormField = (props) => {
         placeholder={props.placeholder}
         value={props.value}
         onChange={(e) => props.onChange(e.target.value)}
+        maxLength={25}
       />
     </div>
   );
@@ -62,7 +63,7 @@ const Registration = () => {
       <div className="registration container">
         <div className="registration form">
           <FormField
-            placeholder="Username"
+            placeholder="Username         (Max. 25 Characters)"
             value={username}
             onChange={(un: string) => setUsername(un)}
           />

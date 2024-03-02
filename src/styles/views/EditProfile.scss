@@ -25,11 +25,16 @@
     }
   &.user-list {
     list-style: none;
-    padding-left: 0;
+    padding-left: 1em;
   }
 }
 
 .player {
+  &.container {
+    width: 97%;
+    padding-left: 10px;
+    padding-right: 5px;
+  }
   &.list-item {
     display: flex;
     align-items: center;
