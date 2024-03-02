@@ -25,7 +25,7 @@ const Player = ({ user, isCurrentUser }: { user: User, isCurrentUser: boolean })
         {isCurrentUser && (
           <div className="player info-item">
             <Button onClick={handleEditProfile}>Edit Profile</Button>
-           </div>
+          </div>
         )}
       </div>
     </div>
