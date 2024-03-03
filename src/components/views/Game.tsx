@@ -28,7 +28,7 @@ const Game = () => {
   // a component can have as many state variables as you like.
   // more information can be found under https://react.dev/learn/state-a-components-memory and https://react.dev/reference/react/useState 
   const [users, setUsers] = useState<User[]>(null);
-  const [userId, setUserId] = useState<string>(null);
+  const [id, setUserId] = useState<number>(null);
 
   const doProfile = (userId: number) => {
     navigate(`/profile/${userId}`);
@@ -38,10 +38,10 @@ const Game = () => {
     try { 
       
       // Call the backend API to update the user's status to "offline"
-      const requestBody = JSON.stringify({userId});
+      const requestBody = JSON.stringify({id});
 
       await api.put("/logout", requestBody);
-
+      
       localStorage.removeItem("token");
       localStorage.removeItem("id");
 
