@@ -28,8 +28,6 @@ const Player = ({ user }: { user: User }) => {
           <span style={{ marginRight: "10px" }}>Birthday: {user.birthday}</span>
           <Button onClick={handleEditBirthday} style={{ fontSize: "10px", padding: "3px", height: "30px" }}>Edit Birthday</Button>
         </div>
-        <div className="player info-item">Creation Date: {user.creationDate}</div>
-        <div className="player info-item">Status: {user.status}</div>
       </div>
     </div>
   );
@@ -57,8 +55,24 @@ const EditProfile = () => {
     fetchUserData();
   }, [userId]);
 
-  const handleSaveChanges = () => {
-    // Implement logic to save changes
+  const handleSaveChanges = async () => {
+    try { 
+      
+      const requestBody = JSON.stringify({userId});
+      
+        // Send a request to the logout endpoint with the authentication token in the headers
+      await api.put(`/user/${userId}`, requestBody);
+  
+        // Remove the token from local storage
+      localStorage.removeItem("token");
+      localStorage.removeItem("id");
+  
+        // Navigate to the login page
+        navigate("/login");
+      } catch (error) {
+        console.error("Error logging out:", error);
+        alert("Failed to logout. Please try again.");
+      }
   };
 
   return (

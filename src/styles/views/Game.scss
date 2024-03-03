@@ -16,6 +16,7 @@
     flex-direction: column;
     align-items: center;
     box-shadow: $dropShadow;
+    min-width: 20em;
   }
   &.user-list {
     list-style: none;
@@ -35,7 +36,7 @@
 .player {
   &.container {
     margin: 0.5em 0;
-    width: 20em;
+    min-width: 20em;
     padding: 10px;
     border-radius: $borderRadius;
     display: flex;
