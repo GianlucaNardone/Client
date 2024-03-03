@@ -58,21 +58,16 @@ const EditProfile = () => {
   const handleSaveChanges = async () => {
     try { 
       
-      const requestBody = JSON.stringify({userId});
-      
-        // Send a request to the logout endpoint with the authentication token in the headers
-      await api.put(`/user/${userId}`, requestBody);
-  
-        // Remove the token from local storage
-      localStorage.removeItem("token");
-      localStorage.removeItem("id");
-  
-        // Navigate to the login page
-        navigate("/login");
-      } catch (error) {
-        console.error("Error logging out:", error);
-        alert("Failed to logout. Please try again.");
-      }
+      // Send a request to the logout endpoint with the authentication token in the headers
+      await api.put(`/user/${userId}`);
+
+      navigate(`/profile/${userId}`)
+
+      // Navigate to the login page
+    } catch (error) {
+      console.error("Error logging out:", error);
+      alert("Failed to logout. Please try again.");
+    }
   };
 
   return (
