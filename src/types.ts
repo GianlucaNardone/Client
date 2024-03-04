@@ -3,6 +3,6 @@ export type User = {
   name: string;
   id: number;
   creationDate: string;
-  birthday: Date;
-  status: string
+  birthday: string;
+  status: string;
 };

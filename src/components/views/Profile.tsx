@@ -46,7 +46,7 @@ const Profile = () => {
   useEffect(() => {
     async function fetchUserData() {
       try {
-        const response = await api.get(`/user/${userId}`);
+        const response = await api.get(`/users/${userId}`);
         setUser(response.data);
       } catch (error) {
         console.error(`Error fetching user data: \n${handleError(error)}`);
@@ -56,13 +56,10 @@ const Profile = () => {
     fetchUserData();
   }, [userId]);
 
-
   useEffect(() => {
-    // Retrieve username from localStorage
-    const storedUsername = localStorage.getItem("username");
-    if (storedUsername) {
-      setCurrentUser({ username: storedUsername });
-    }
+    // Retrieve id from localStorage
+    const storedUserId = localStorage.getItem("id");
+    setCurrentUser({ id: storedUserId });
   }, []);
 
   const doHome = () => {
@@ -75,7 +72,7 @@ const Profile = () => {
         <div className="profile form">
           <ul className="profile user-list">
             <li className="player list-item">
-              <Player user={user} isCurrentUser={user.username === currentUser.username} />
+              <Player user={user} isCurrentUser={userId === currentUser.id} />
             </li>
           </ul>
           <Button style={{ marginBottom: "35px" }} width="100%" onClick={() => doHome()}>

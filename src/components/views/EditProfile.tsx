@@ -1,51 +1,45 @@
 import React, { useEffect, useState } from "react";
 import { api, handleError } from "helpers/api";
 import { Button } from "components/ui/Button";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/EditProfile.scss";
 import { User } from "types";
 
-const Player = ({ user }: { user: User }) => {
-
-  const handleEditUsername = () => {
-    // Implement logic to enable editing username
-  };
-
-  const handleEditBirthday = () => {
-    // Implement logic to enable editing birthday
-  };
-  
+const FormField = (props) => {
   return (
-    <div className="player container">
-      <div className="player info">
-        <div className="player info-item">
-          <span style={{ marginRight: "10px" }}>Username: {user.username}</span>
-          <Button onClick={handleEditUsername} style={{ fontSize: "10px", padding: "3px", height: "30px"}}>Edit Username</Button>
-        </div>
-        <div className="player info-item">
-          <span style={{ marginRight: "10px" }}>Birthday: {user.birthday}</span>
-          <Button onClick={handleEditBirthday} style={{ fontSize: "10px", padding: "3px", height: "30px" }}>Edit Birthday</Button>
-        </div>
-      </div>
+    <div className="editprofile field">
+      <label className="editprofile label">{props.label}</label>
+      <input
+        className="editprofile input"
+        placeholder={props.placeholder}
+        value={props.value}
+        onChange={(e) => props.onChange(e.target.value)}
+        maxLength={25}
+      />
     </div>
   );
 };
   
-Player.propTypes = {
-  user: PropTypes.object.isRequired,
+FormField.propTypes = {
+  label: PropTypes.string,
+  placeholder: PropTypes.string,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
 };
 
 const EditProfile = () => {
   const navigate = useNavigate();
-  const userId = JSON.parse(localStorage.getItem("id"));
+  const userId = localStorage.getItem("id");
   const [user, setUser] = useState<User>({});
+  const [username, setUsername] = useState<string>("");
+  const [birthday, setBirthday] = useState<string>("");
 
   useEffect(() => {
     async function fetchUserData() {
       try {
-        const response = await api.get(`/user/${userId}`);
+        const response = await api.get(`/users/${userId}`);
         setUser(response.data);
       } catch (error) {
         console.error(`Error fetching user data: \n${handleError(error)}`);
@@ -57,30 +51,60 @@ const EditProfile = () => {
 
   const handleSaveChanges = async () => {
     try { 
-      
-      // Send a request to the logout endpoint with the authentication token in the headers
-      await api.put(`/user/${userId}`);
+
+      if (username === user.username) {
+        alert("New username must be different from the old one.");
+        return;
+      }
+
+      if (birthday === user.birthday) {
+        alert("New birthday must be different from the old one.");
+        return;
+      }
+
+      const birthdayRegex = /^\d{4}-\d{2}-\d{2}$/;
+      if (birthday){
+        if (!birthday.match(birthdayRegex)) {
+          alert("Birthday must be in the format YYYY-MM-DD.");
+          return;
+        }
+      }
+
+      const requestBody = JSON.stringify({ username, birthday })
+      await api.put(`/users/${userId}`, requestBody);
 
       navigate(`/profile/${userId}`)
 
-      // Navigate to the login page
     } catch (error) {
-      console.error("Error logging out:", error);
-      alert("Failed to logout. Please try again.");
+      alert("Failed to save the changes. Please try again.");
     }
   };
+
+  const handleBackToProfile = () => {
+    navigate(`/profile/${userId}`);
+  }
 
   return (
     <BaseContainer>
       <div className="editprofile container">
         <div className="editprofile form">
-          <ul className="editprofile user-list">
-            <li className="player list-item">
-              <Player user={user} />
-            </li>
-          </ul>
-          <Button style={{ marginBottom: "35px" }} width="100%" onClick={handleSaveChanges}>
+          <FormField
+            label = "Username"
+            placeholder="Enter new Username ..."
+            value={username}
+            onChange={(un: string) => setUsername(un)}
+          />
+          <FormField
+            label = "Birthday"
+            placeholder="Enter new Birthday (YYYY-MM-DD)..."
+            value={birthday}
+            onChange={(un: string) => setBirthday(un)}
+          />  
+          <Button style={{ marginBottom: "20px" }} disabled={!username && !birthday} width="100%" onClick={handleSaveChanges}>
             Save Changes
+          </Button>
+          <Button style={{ marginBottom: "30px" }} width="100%" onClick={handleBackToProfile}>
+            Back To Profile
           </Button>
         </div>
       </div>
