@@ -54,11 +54,13 @@ const EditProfile = () => {
 
       if (username === user.username) {
         alert("New username must be different from the old one.");
+
         return;
       }
 
       if (birthday === user.birthday) {
         alert("New birthday must be different from the old one.");
+
         return;
       }
 
@@ -66,6 +68,7 @@ const EditProfile = () => {
       if (birthday){
         if (!birthday.match(birthdayRegex)) {
           alert("Birthday must be in the format YYYY-MM-DD.");
+          
           return;
         }
       }
