@@ -34,7 +34,7 @@ const EditProfile = () => {
   const userId = localStorage.getItem("id");
   const [user, setUser] = useState<User>({});
   const [username, setUsername] = useState<string>("");
-  const [birthday, setBirthday] = useState<string>("");
+  const [birthday, setBirthday] = useState<string>(null);
 
   useEffect(() => {
     async function fetchUserData() {
@@ -68,7 +68,7 @@ const EditProfile = () => {
       if (birthday){
         if (!birthday.match(birthdayRegex)) {
           alert("Birthday must be in the format YYYY-MM-DD.");
-          
+
           return;
         }
       }
