@@ -60,11 +60,6 @@ const EditProfile = () => {
 
       const birthdayRegex = /^\d{4}-\d{2}-\d{2}$/;
       if (birthday){
-        if (birthday === user.birthday) {
-          alert("New birthday must be different from the old one.");
-
-          return;
-        }
         if (!birthday.match(birthdayRegex)) {
           alert("Birthday must be in the format YYYY-MM-DD.");
 
