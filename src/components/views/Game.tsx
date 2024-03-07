@@ -8,16 +8,6 @@ import PropTypes from "prop-types";
 import "styles/views/Game.scss";
 import { User } from "types";
 
-const Player = ({ user }: { user: User }) => (
-  <div className="player container">
-    <div className="player username">{user.username}</div>
-  </div>
-);
-
-Player.propTypes = {
-  user: PropTypes.object,
-};
-
 const Game = () => {
   // use react-router-dom's hook to access navigation, more info: https://reactrouter.com/en/main/hooks/use-navigate 
   const navigate = useNavigate();
@@ -33,6 +23,16 @@ const Game = () => {
   const doProfile = (userId: number) => {
     navigate(`/profile/${userId}`);
   }
+
+  const Player = ({ user }: { user: User }) => (
+    <div className="player container" onClick={() => doProfile(user.id)}>
+      <div className="player username">{user.username}</div>
+    </div>
+  );
+
+  Player.propTypes = {
+    user: PropTypes.object,
+  };
 
   const logout = async () => {
     try { 
@@ -100,9 +100,6 @@ const Game = () => {
           {users.map((user: User) => (
             <li key={user.id} className="player list-item">
               <Player user={user}/>
-              <Button className="profile-button" width="100%" onClick={() => doProfile(user.id)}>
-                See Profile
-              </Button>
             </li>
           ))}
         </ul>
